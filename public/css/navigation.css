@@ -1,0 +1,38 @@
+#navigation {
+  width: 100%;
+}
+
+.nav-item {
+  position: relative;
+  list-style: none;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  padding: 15px 40px;
+  display: flex;
+}
+
+a {
+  color: #fff;
+}
+
+a.active,
+i.active {
+  color: turquoise;
+}
+
+.decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 5px;
+}
+
+.decoration.active {
+  background: turquoise;
+}
+
+hr {
+  width: 70%;
+  margin: 30px auto;
+}

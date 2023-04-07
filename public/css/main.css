@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Ms+Madi&display=swap");
+
+:root {
+  /* backgrounds */
+  --bg-color: #fff;
+  --container-color: rgba(255, 255, 255, 0.596);
+  --btn-primary: #000;
+  --btn-secondary: #fff;
+  --btn-disabled: rgb(173, 172, 172);
+
+  /* fonts */
+  --font-primary: "Montserrat", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-color);
+  font-family: var(--font-primary);
+  font-size: 21px;
+  height: 100vh;
+  padding: 30px;
+}
+
+a {
+  text-decoration: none;
+}
+
+i {
+  padding-right: 10px;
+}
+
+.warning {
+  color: crimson;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: var(--btn-primary);
+  color: #fff;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.column {
+  height: 95%;
+}
+
+.column_left,
+.column_right {
+  width: 25%;
+}
+
+.column_left {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+}
+
+.column_middle {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  margin: 0 4vh;
+}
+
+.container {
+  background: var(--container-color);
+  width: 100%;
+  border: 1px solid #cacaca;
+}

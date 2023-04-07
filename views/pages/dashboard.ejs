@@ -1,0 +1,28 @@
+<%- include('../components/head.ejs') %>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/navigation.css" />
+
+  <body class="center">
+    <%- include('../components/navigation.ejs') %>
+    <section class="column column_middle">
+      <section class="grid">
+        <div class="search"></div>
+        <div class="balance-overview">
+          <div class="box balance"></div>
+          <div class="box expenses"></div>
+          <div class="box incomes"></div>
+        </div>
+        <div class="charts-overview">
+          <div class="container chart">
+          </div>
+          <div class="container chart"></div>
+        </div>
+      </section>
+      <div class="container tansactions-overview"></div>
+    </section>
+    <section class="column column_right">
+      <div class="container profile"></div>
+    </section>
+  </body>
+  <%- include('../components/footer.ejs') %>
+</html>

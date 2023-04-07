@@ -1,0 +1,22 @@
+.container.filters {
+  border: none;
+  display: flex;
+  justify-content: end;
+  margin-bottom: 2vh;
+}
+
+.container.transactions {
+  height: 70%;
+  width: 100%;
+  border: none;
+  margin-top: 2vh;
+}
+
+.transaction-item {
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px 0;
+  margin: 30px 0;
+}

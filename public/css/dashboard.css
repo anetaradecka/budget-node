@@ -1,0 +1,86 @@
+.container.navigation {
+  border-radius: 20px 20px 20px 0;
+  height: 70%;
+  margin-bottom: 2vh;
+  display: flex;
+  flex-direction: column;
+  background: #222;
+  color: #fff;
+  border: none;
+}
+
+.container h4 {
+  margin: 30px auto;
+}
+
+.container.pro {
+  border-radius: 20px 20px 0 0;
+  height: 30%;
+  margin-top: 2vh;
+  background: #222;
+}
+
+.container.profile {
+  border-radius: 0 20px 0 0;
+  height: 100%;
+}
+
+.grid {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2vh;
+}
+
+.container.tansactions-overview {
+  border-radius: 20px 20px 0 0;
+  height: 30%;
+  margin-top: 2vh;
+}
+
+.balance-overview {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 30%;
+  margin-bottom: 2vh;
+}
+
+.box {
+  width: 30%;
+  height: 100%;
+  border-radius: 7px;
+}
+
+.box.balance {
+  background: #e5db9ca3;
+  border: none;
+}
+
+.box.incomes {
+  background: #beb4c59a;
+  border: none;
+}
+
+.box.expenses {
+  margin: 0 2vw;
+  background: #e6a67e97;
+  border: none;
+}
+
+.charts-overview {
+  height: 70%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 2vh;
+}
+
+.chart {
+  width: 50%;
+  height: 100%;
+  border-radius: 7px;
+}
+
+.chart:first-of-type {
+  margin-right: 2vw;
+}

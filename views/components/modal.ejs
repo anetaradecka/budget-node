@@ -1,0 +1,71 @@
+<div class="modal" id="modal">
+  <div class="overlay"></div>
+  <div class="content">
+    <div class="close-btn" onclick="toggleModal()">&times;</div>
+    <h2>Add <%= type %></h2>
+
+    <!-- expenses form -->
+    <% if (type === 'expenses') { %>
+    <form class="transaction-form" action="/expenses/add-expense" method="POST">
+      <div class="form-control">
+        <label for="category">category</label>
+        <select id="category" name="category">
+          <option value="food">food</option>
+          <option value="bills">bills</option>
+          <option value="home">home</option>
+        </select>
+      </div>
+
+      <div class="form-control">
+        <label for="value">value</label>
+        <input type="number" name="value" id="value" step="0.01" />
+      </div>
+
+      <div class="form-control">
+        <label for="date">date</label>
+        <input type="date" name="date" id="date" />
+      </div>
+
+      <div class="form-control">
+        <label for="description">Comment*</label>
+        <textarea name="comment" id="comment" rows="5"> </textarea>
+      </div>
+
+      <input type="hidden" name="type" value="expense" />
+      <button class="btn" type="submit">Add expense</button>
+    </form>
+    <!-- incomes form -->
+    <% } else if (type === 'incomes') { %>
+    <form class="transaction-form" action="/incomes/add-income" method="POST">
+      <div class="form-control">
+        <label for="category">category</label>
+        <select id="category" name="category">
+          <option value="salary">salary</option>
+          <option value="interests">interests</option>
+          <option value="freelance">freelance</option>
+        </select>
+      </div>
+
+      <div class="form-control">
+        <label for="value">value</label>
+        <input type="number" name="value" id="value" step="0.01" />
+      </div>
+
+      <div class="form-control">
+        <label for="date">date</label>
+        <input type="date" name="date" id="date" />
+      </div>
+
+      <div class="form-control">
+        <label for="description">Comment*</label>
+        <textarea name="comment" id="comment" rows="5"> </textarea>
+      </div>
+
+      <input type="hidden" name="type" value="income" />
+      <button class="btn" type="submit">Add income</button>
+    </form>
+    <% } else { %>
+    <p>Sorry, something went wrong!</p>
+    <% } %>
+  </div>
+</div>
