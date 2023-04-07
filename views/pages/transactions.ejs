@@ -6,19 +6,21 @@
 
 <body class="center">
   <%- include('../components/navigation.ejs') %>
+
   <section class="column column_middle">
     <div class="container filters">
       <button class="btn btn-primary" onclick="toggleModal()">
-        Add income
+        Add <%= type.slice(0,-1) %>
       </button>
     </div>
     <div class="container transactions">
-      <% if(incomes.length > 0) { %> <% for(let income of incomes) { %>
+      <% if(transactions.length > 0) { %> <% for(let transaction of
+      transactions) { %>
       <div class="container transaction-item">
-        <h3 class="transaction-category"><%= income.item.category %></h3>
-        <p class="transaction-comment"><%= income.item.comment %></p>
-        <p class="transaction-value"><%= income.item.value %> PLN</p>
-        <p class="transaction-date"><%= income.item.date %></p>
+        <h3 class="transaction-category"><%= transaction.item.category %></h3>
+        <p class="transaction-comment"><%= transaction.item.comment %></p>
+        <p class="transaction-value"><%= transaction.item.value %> PLN</p>
+        <p class="transaction-date"><%= transaction.item.date %></p>
       </div>
       <% } %> <% } %>
     </div>
@@ -26,7 +28,7 @@
   <section class="column column_right">
     <div class="container profile"></div>
   </section>
-  <!-- modal -->
+
   <%- include('../components/modal.ejs') %>
 </body>
 <script src="/js/main.js"></script>

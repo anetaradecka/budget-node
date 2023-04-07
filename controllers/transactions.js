@@ -1,6 +1,7 @@
 const Expense = require("../models/expense");
 const Income = require("../models/income");
 const ENUM = require("../util/enums");
+const categoryList = require("../models/categories");
 const moment = require("moment");
 
 const convertDates = (transactions) => {
@@ -12,32 +13,37 @@ const convertDates = (transactions) => {
 };
 
 exports.getTransactions = (req, res, next) => {
-  const type = req.originalUrl.slice(1);
+  const type = req.originalUrl.slice(1).slice(0, -1);
   let transactions;
+  let categories;
 
   switch (type) {
-    case ENUM.TransactionTypes.EXPENSES:
+    case ENUM.TransactionTypes.EXPENSE:
       transactions = req.user.expenses.items;
+      categories = categoryList.ExpenseCategories;
 
       convertDates(transactions);
 
-      res.render("pages/expenses", {
+      res.render("pages/transactions", {
         pageTitle: "Expenses",
         path: "/expenses",
-        expenses: transactions,
+        transactions: transactions,
         type: type,
+        categories: categories,
       });
       break;
-    case ENUM.TransactionTypes.INCOMES:
+    case ENUM.TransactionTypes.INCOME:
       transactions = req.user.incomes.items;
+      categories = categoryList.IncomeCategories;
 
       convertDates(transactions);
 
-      res.render("pages/incomes", {
+      res.render("pages/transactions", {
         pageTitle: "Incomes",
         path: "/incomes",
-        incomes: transactions,
+        transactions: transactions,
         type: type,
+        categories: categories,
       });
       break;
     default:
