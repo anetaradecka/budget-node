@@ -10,7 +10,8 @@ const errorController = require("./controllers/error");
 
 const User = require("./models/user");
 
-const MONGODB_URI = "";
+const MONGODB_URI =
+  "";
 
 const app = express();
 // here we store session on the server not in the memory
@@ -57,18 +58,6 @@ app.use(errorController.get404);
 mongoose
   .connect(MONGODB_URI)
   .then((result) => {
-    User.findOne().then((user) => {
-      if (!user) {
-        const user = new User({
-          name: "John Doe",
-          email: "john.doe@test.com",
-          expenses: {
-            items: [],
-          },
-        });
-        user.save();
-      }
-    });
     app.listen(3000);
   })
   .catch((err) => {
