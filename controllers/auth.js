@@ -1,15 +1,40 @@
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport");
+
 const User = require("../models/user");
 
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key: "",
+    },
+  })
+);
+
 exports.getLogin = (req, res, next) => {
+  let message = req.flash("error");
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render("pages/login", {
     pageTitle: "Login to your account",
+    errorMessage: message,
   });
 };
 
 exports.getSignup = (req, res, next) => {
+  let message = req.flash("error");
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render("pages/signup", {
     pageTitle: "Create an account",
+    errorMessage: message,
   });
 };
 
@@ -19,6 +44,8 @@ exports.postLogin = (req, res, next) => {
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
+        // we add this msg to the session so that we can now use it anywhere
+        req.flash("error", "Invalid email or password");
         return res.redirect("/login");
       }
       bcrypt
@@ -33,6 +60,7 @@ exports.postLogin = (req, res, next) => {
               res.redirect("/dashboard");
             });
           }
+          req.flash("error", "Invalid email or password");
           res.redirect("/login");
         })
         .catch((err) => {
@@ -58,6 +86,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email: email })
     .then((userDoc) => {
       if (userDoc) {
+        req.flash("error", "E-Mail already exists!");
         return res.redirect("/signup");
       }
       return bcrypt
@@ -73,6 +102,15 @@ exports.postSignup = (req, res, next) => {
         })
         .then((result) => {
           res.redirect("/login");
+          return transporter.sendMail({
+            to: email,
+            from: "",
+            subject: "Signup succeeded",
+            html: "<h1>You successfully signed up!</>",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
         });
     })
     .catch((err) => {

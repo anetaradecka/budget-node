@@ -1,20 +1,23 @@
 const express = require("express");
 
 const transactionsController = require("../controllers/transactions");
+const isAuth = require("../middleware/is-auth");
 
 const router = express.Router();
 
-router.get("/expenses", transactionsController.getTransactions);
+router.get("/expenses", isAuth, transactionsController.getTransactions);
 
 router.post(
   "/expenses/add-transaction",
+  isAuth,
   transactionsController.postNewTransaction
 );
 
-router.get("/incomes", transactionsController.getTransactions);
+router.get("/incomes", isAuth, transactionsController.getTransactions);
 
 router.post(
   "/incomes/add-transaction",
+  isAuth,
   transactionsController.postNewTransaction
 );
 

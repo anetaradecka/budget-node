@@ -4,6 +4,9 @@
 <body>
   <div class="container">
     <div class="wrapper">
+      <% if(errorMessage) { %>
+        <div class="error-msg"><%= errorMessage %></div>
+        <% } %>
       <div class="title"><span>Signup Form</span></div>
       <form action="/signup" method="POST">
         <div class="row">
@@ -29,6 +32,7 @@
           />
         </div>
         <div class="row button">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
           <button type="submit" value="Login">Signup</button>
         </div>
         <div class="signup-link">

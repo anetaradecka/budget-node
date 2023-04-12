@@ -35,6 +35,7 @@
         <textarea name="comment" id="comment" rows="5"> </textarea>
       </div>
 
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
       <input type="hidden" name="type" value="<%= type %>" />
       <button class="btn" type="submit">Add <%= type %></button>
     </form>
