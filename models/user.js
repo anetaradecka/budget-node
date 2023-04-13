@@ -11,6 +11,8 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  resetToken: String,
+  resetTokenExpiration: String,
   expenses: { items: [] },
   incomes: { items: [] },
 });
@@ -42,17 +44,5 @@ userSchema.methods.addTransactionToBudget = function (type, item) {
   }
   return this.save();
 };
-
-// userSchema.methods.addToExpenses = function (item) {
-//   const listItems = [...this.expenses.items];
-
-//   listItems.push({ item });
-
-//   const updatedList = { items: listItems };
-
-//   this.expenses = updatedList;
-
-//   return this.save();
-// };
 
 module.exports = mongoose.model("User", userSchema);
