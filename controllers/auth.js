@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
+const { validationResult } = require("express-validator/check");
 
 const User = require("../models/user");
 const { restart } = require("nodemon");
@@ -25,6 +26,11 @@ exports.getLogin = (req, res, next) => {
   res.render("pages/login", {
     pageTitle: "Login to your account",
     errorMessage: message,
+    savedInput: {
+      email: "",
+      password: "",
+    },
+    validationErrors: [],
   });
 };
 
@@ -38,18 +44,45 @@ exports.getSignup = (req, res, next) => {
   res.render("pages/signup", {
     pageTitle: "Create an account",
     errorMessage: message,
+    savedInput: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationErrors: [],
   });
 };
 
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
+
+  const errors = validationResult(req);
+  console.log(errors);
+  if (!errors.isEmpty()) {
+    return res.status(422).render("pages/login", {
+      pageTitle: "Login to your account",
+      errorMessage: errors.array()[0].msg,
+      savedInput: {
+        email: email,
+        password: password,
+      },
+      validationErrors: errors.array(),
+    });
+  }
+
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
-        // we add this msg to the session so that we can now use it anywhere
-        req.flash("error", "Invalid email or password");
-        return res.redirect("/login");
+        return res.status(422).render("pages/login", {
+          pageTitle: "Login to your account",
+          errorMessage: "Invalid email or password",
+          savedInput: {
+            email: email,
+            password: password,
+          },
+          validationErrors: [],
+        });
       }
       bcrypt
         .compare(password, user.password)
@@ -63,8 +96,15 @@ exports.postLogin = (req, res, next) => {
               res.redirect("/dashboard");
             });
           }
-          req.flash("error", "Invalid email or password");
-          res.redirect("/login");
+          return res.status(422).render("pages/login", {
+            pageTitle: "Login to your account",
+            errorMessage: "Invalid email or password",
+            savedInput: {
+              email: email,
+              password: password,
+            },
+            validationErrors: [],
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -84,37 +124,41 @@ exports.postLogout = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword;
 
-  User.findOne({ email: email })
-    .then((userDoc) => {
-      if (userDoc) {
-        req.flash("error", "E-Mail already exists!");
-        return res.redirect("/signup");
-      }
-      return bcrypt
-        .hash(password, 12)
-        .then((hashedPassword) => {
-          const user = new User({
-            email: email,
-            password: hashedPassword,
-            expenses: { items: [] },
-            incomes: { items: [] },
-          });
-          return user.save();
-        })
-        .then((result) => {
-          res.redirect("/login");
-          return transporter.sendMail({
-            to: email,
-            from: "",
-            subject: "Signup succeeded",
-            html: "<h1>You successfully signed up!</>",
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  //this will go throug the results of the middleware in routes and check if wehave errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render("pages/signup", {
+      pageTitle: "Create an account",
+      errorMessage: errors.array()[0].msg,
+      savedInput: {
+        email: email,
+        password: password,
+        confirmPassword: req.body.confirmPassword,
+      },
+      validationErrors: errors.array(),
+    });
+  }
+
+  bcrypt
+    .hash(password, 12)
+    .then((hashedPassword) => {
+      const user = new User({
+        email: email,
+        password: hashedPassword,
+        expenses: { items: [] },
+        incomes: { items: [] },
+      });
+      return user.save();
+    })
+    .then((result) => {
+      res.redirect("/login");
+      return transporter.sendMail({
+        to: email,
+        from: "",
+        subject: "Signup succeeded",
+        html: "<h1>You successfully signed up!</>",
+      });
     })
     .catch((err) => {
       console.log(err);

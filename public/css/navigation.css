@@ -17,7 +17,7 @@ a {
 
 a.active,
 i.active {
-  color: turquoise;
+  color: cornflowerblue;
 }
 
 .decoration {
@@ -29,10 +29,42 @@ i.active {
 }
 
 .decoration.active {
-  background: turquoise;
+  background: cornflowerblue;
 }
 
 hr {
   width: 70%;
   margin: 30px auto;
+}
+
+.logout-button {
+  background: #2a2c38;
+  color: #fff;
+  border: none;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.form__logout {
+  margin: 0;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.author {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 0 15px 0;
+}
+
+.author img {
+  height: 150px;
+  width: 150px;
 }

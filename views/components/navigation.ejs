@@ -2,6 +2,13 @@
   <div class="container navigation">
     <h4>Budget tracker</h4>
     <nav id="navigation">
+      <div class="profile">
+        <div class="author">
+          <img src="/img/john-doe.jpg" alt="" />
+        </div>
+        <h5>John Doe</h5>
+      </div>
+      <hr />
       <ul id="primary-nav">
         <li class="nav-item">
           <div
@@ -45,13 +52,12 @@
       <ul id="secondary-nav">
         <li class="nav-item warning">
           <i class="fa-solid fa-circle-xmark"></i>
-          <form action="/logout" method="POST">
+          <form class="form__logout" action="/logout" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-            <button type="submit">Logout</button>
+            <button class="logout-button" type="submit">Logout</button>
           </form>
         </li>
       </ul>
     </nav>
   </div>
-  <div class="container pro"></div>
 </section>

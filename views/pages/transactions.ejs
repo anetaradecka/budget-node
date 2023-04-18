@@ -10,19 +10,40 @@
   <section class="column column_middle">
     <div class="container filters">
       <button class="btn btn-primary" onclick="toggleModal()">
-        Add <%= type.slice(0,-1) %>
+        Add <%= type %>
       </button>
     </div>
     <div class="container transactions">
+      <div class="row transactions-meta">
+        <p>Category</p>
+        <p>Comment</p>
+        <p>Date</p>
+        <p>Amount</p>
+      </div>
       <% if(transactions.length > 0) { %> <% for(let transaction of
       transactions) { %>
-      <div class="container transaction-item">
-        <h3 class="transaction-category"><%= transaction.item.category %></h3>
+      <div class="row transaction-item">
+        <p class="transaction-category"><%= transaction.item.category %></p>
         <p class="transaction-comment"><%= transaction.item.comment %></p>
-        <p class="transaction-value"><%= transaction.item.value %> PLN</p>
         <p class="transaction-date"><%= transaction.item.date %></p>
+        <p class="transaction-value">
+          <% if (type === 'expense') { %>
+          <span>- </span>
+          <% } else { %>
+          <span>+ </span>
+          <% } %><%= transaction.item.value %> PLN
+        </p>
+        <p>
+          <i class="fa-solid fa-pen-to-square"></i>
+          <i class="fa-solid fa-trash"></i>
+        </p>
       </div>
-      <% } %> <% } %>
+      <% } %> <% } else { %>
+      <div class="empty center">
+        <h6>No transactions yet! Click on add to add your first transaction</h6>
+        <img class="empty-transaction" src="/img/empty.svg" alt="" />
+      </div>
+      <% } %>
     </div>
   </section>
   <section class="column column_right">

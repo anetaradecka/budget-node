@@ -7,7 +7,6 @@ exports.getIndex = (req, res, next) => {
 
 exports.getDashboard = (req, res, next) => {
   const isLoggedIn = req.session.isLoggedIn;
-  console.log("User has successfuly logged in: " + isLoggedIn);
   if (isLoggedIn) {
     res.render("pages/dashboard", {
       pageTitle: "My dashboard",

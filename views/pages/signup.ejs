@@ -1,42 +1,52 @@
 <%- include('../components/head.ejs') %>
-<link rel="stylesheet" href="/css/login.css" />
+<link rel="stylesheet" href="/css/form.css" />
 
 <body>
   <div class="container">
     <div class="wrapper">
       <% if(errorMessage) { %>
-        <div class="error-msg"><%= errorMessage %></div>
-        <% } %>
-      <div class="title"><span>Signup Form</span></div>
-      <form action="/signup" method="POST">
+      <div class="error-msg"><%= errorMessage %></div>
+      <% } %>
+      <div class="title"><span>Get started for free</span></div>
+      <form action="/signup" method="POST" novalidate>
         <div class="row">
-          <i class="fas fa-user"></i>
-          <input type="email" name="email" id="email" placeholder="Email" />
+          <label for="email">Email Address</label>
+          <input
+            class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : ''%>"
+            type="email"
+            name="email"
+            id="email"
+            value="<%= savedInput.email %>"
+          />
         </div>
         <div class="row">
-          <i class="fas fa-lock"></i>
+          <label for="password">Password</label>
           <input
+            class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : ''%>"
             type="password"
             name="password"
             id="password"
-            placeholder="Password"
+            value="<%= savedInput.password %>"
           />
         </div>
         <div class="row">
-          <i class="fas fa-lock"></i>
+          <label for="confirmPassword">Confirm password</label>
           <input
+            class="<%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : ''%>"
             type="password"
             name="confirmPassword"
             id="confirmPassword"
-            placeholder="Confirm password"
+            value="<%= savedInput.confirmPassword %>"
           />
         </div>
-        <div class="row button">
+        <div class="row">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-          <button type="submit" value="Login">Signup</button>
+          <button class="button" type="submit" value="Login">
+            Create account
+          </button>
         </div>
         <div class="signup-link">
-          Already a member? <a href="#">Login now</a>
+          Already a member? <a href="/login">Log in</a>
         </div>
       </form>
     </div>
