@@ -49,6 +49,11 @@ i {
   color: #fff;
 }
 
+.btn-hidden {
+  background: none;
+  border: none;
+}
+
 .btn-primary:hover {
   background-color: #fff;
   border: 1px solid var(--btn-primary);

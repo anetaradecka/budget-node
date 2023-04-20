@@ -56,9 +56,15 @@
   font-weight: bold;
 }
 
-.transaction-item p:nth-child(5) {
+.transaction-action {
+  width: 20%;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: right;
+}
+
+.transaction-action i {
+  cursor: pointer;
 }
 
 .transaction-category,

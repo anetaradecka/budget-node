@@ -13,6 +13,12 @@ router.post(
   transactionsController.postNewTransaction
 );
 
+router.post(
+  "/expenses/delete-transaction",
+  isAuth,
+  transactionsController.postDeleteTransaction
+);
+
 router.get("/incomes", isAuth, transactionsController.getTransactions);
 
 router.post(

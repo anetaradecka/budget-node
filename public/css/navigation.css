@@ -45,8 +45,10 @@ hr {
   text-decoration: none;
 }
 
-.form__logout {
+.form__logout,
+.form-transaction-action {
   margin: 0;
+  width: initial;
 }
 
 .profile {

@@ -12,7 +12,8 @@ const errorController = require("./controllers/error");
 
 const User = require("./models/user");
 
-const MONGODB_URI = "";
+const MONGODB_URI =
+  "mongodb+srv://aneta:aneta123@shop.ypxo1ke.mongodb.net/budget";
 
 const app = express();
 // here we store session on the server not in the memory

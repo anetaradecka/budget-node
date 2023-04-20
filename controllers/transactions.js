@@ -98,3 +98,27 @@ exports.postNewTransaction = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.postDeleteTransaction = (req, res, next) => {
+  const transactionId = req.body.transactionId;
+  const type = req.body.type;
+
+  req.user
+    .removeTransactionFromBudget(type, transactionId)
+    .then((result) => {
+      console.log(`Transaction of type ${type} has successfuly been removed`);
+      if (type === ENUM.TransactionTypes.EXPENSE) {
+        res.redirect("/expenses");
+      } else if (type === ENUM.TransactionTypes.INCOME) {
+        res.redirect("/incomes");
+      } else {
+        console.log(
+          `Unknown transaction type: ${type}. Redirect to dashboard.`
+        );
+        res.redirect("/dashboard");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
