@@ -1,12 +1,12 @@
 <div class="modal" id="modal">
   <div class="overlay"></div>
   <div class="content">
-    <div class="close-btn" onclick="toggleModal()">&times;</div>
+    <div class="close-btn center" onclick="toggleModal()">&times;</div>
     <h2>Add <%= type %></h2>
 
     <form
       class="transaction-form"
-      action="<%= path %>/add-transaction"
+      action="<%= path %>/add-transaction %>"
       method="POST"
     >
       <div class="form-control">
@@ -31,13 +31,13 @@
       </div>
 
       <div class="form-control">
-        <label for="description">Comment*</label>
-        <textarea name="comment" id="comment" rows="5"> </textarea>
+        <label for="description">Notes (optional)</label>
+        <textarea name="comment" id="comment" rows="5"></textarea>
       </div>
 
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
       <input type="hidden" name="type" value="<%= type %>" />
-      <button class="btn" type="submit">Add <%= type %></button>
+      <button class="btn btn-primary" type="submit">Add <%= type %></button>
     </form>
   </div>
 </div>

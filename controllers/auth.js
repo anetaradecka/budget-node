@@ -16,13 +16,18 @@ const transporter = nodemailer.createTransport(
   })
 );
 
-exports.getLogin = (req, res, next) => {
+const checkMessage = (req) => {
   let message = req.flash("error");
   if (message.length > 0) {
     message = message[0];
   } else {
     message = null;
   }
+  return message;
+};
+
+exports.getLogin = (req, res, next) => {
+  let message = checkMessage(req);
   res.render("pages/login", {
     pageTitle: "Login to your account",
     errorMessage: message,
@@ -35,12 +40,7 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
-  let message = req.flash("error");
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
-  }
+  let message = checkMessage(req);
   res.render("pages/signup", {
     pageTitle: "Create an account",
     errorMessage: message,
@@ -166,12 +166,7 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.getResetPassword = (req, res, next) => {
-  let message = req.flash("error");
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
-  }
+  let message = checkMessage(req);
   res.render("pages/reset-password", {
     pageTitle: "Reset password",
     errorMessage: message,
@@ -219,12 +214,7 @@ exports.getNewPassword = (req, res, next) => {
     resetTokenExpiration: { $gt: Date.now() },
   })
     .then((user) => {
-      let message = req.flash("error");
-      if (message.length > 0) {
-        message = message[0];
-      } else {
-        message = null;
-      }
+      let message = checkMessage(req);
       res.render("pages/new-password", {
         pageTitle: "Set new password",
         errorMessage: message,
