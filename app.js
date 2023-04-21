@@ -12,7 +12,8 @@ const errorController = require("./controllers/error");
 
 const User = require("./models/user");
 
-const MONGODB_URI = "";
+const MONGODB_URI =
+  "mongodb+srv://aneta:aneta123@shop.ypxo1ke.mongodb.net/budget";
 
 const app = express();
 // here we store session on the server not in the memory
@@ -22,7 +23,6 @@ const store = new MongoDbStore({
 });
 
 const csrfProtection = csrf();
-app.use(flash());
 
 app.set("view engine", "ejs");
 
@@ -42,6 +42,13 @@ app.use(
   })
 );
 app.use(csrfProtection);
+app.use(flash());
+
+app.use((req, res, next) => {
+  // dodajemy token do kazdego renderowanego widoku
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
 
 app.use((req, res, next) => {
   if (!req.session.user) {
@@ -49,21 +56,29 @@ app.use((req, res, next) => {
   }
   User.findById(req.session.user._id)
     .then((user) => {
+      if (!user) {
+        return next();
+      }
       req.user = user;
       next();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      next(new Error(err));
+    });
 });
 
-app.use((req, res, next) => {
-  // dodajemy token do kazdego renderowanego widoku
-  res.locals.csrfToken = req.csrfToken();
-  next();
-});
 app.use(adminRoutes);
 app.use(authRoutes);
 app.use(transactionsRoutes);
+
+app.get("/500", errorController.get500);
+
 app.use(errorController.get404);
+
+//a special error-handling middleware with 4 arguments
+app.use((error, req, res, next) => {
+  res.status(500).render("500", { pageTitle: "Technical error", path: "500" });
+});
 
 mongoose
   .connect(MONGODB_URI)

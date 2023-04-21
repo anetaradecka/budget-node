@@ -95,7 +95,10 @@ exports.postNewTransaction = (req, res, next) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      // this will skip all other middleware and go to error-handling middleware
+      return next(error);
     });
 };
 
@@ -119,7 +122,9 @@ exports.postDeleteTransaction = (req, res, next) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
