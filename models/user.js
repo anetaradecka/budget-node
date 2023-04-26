@@ -1,4 +1,5 @@
 const ENUM = require("../util/enums");
+const fileHelper = require("../util/file");
 
 const mongoose = require("mongoose");
 
@@ -77,6 +78,10 @@ userSchema.methods.removeTransactionFromBudget = function (
 };
 
 userSchema.methods.updateUser = function (imageUrl) {
+  if (this.avatar !== "default.jpg") {
+    let oldAvatar = "images/" + this.avatar;
+    fileHelper.deleteFile(oldAvatar);
+  }
   this.avatar = imageUrl;
   return this.save();
 };
