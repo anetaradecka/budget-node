@@ -10,6 +10,15 @@
       <div class="title"><span>Get started for free</span></div>
       <form action="/signup" method="POST" novalidate>
         <div class="row">
+          <label for="name">How you would like to be called?</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value="<%= savedInput.name %>"
+          />
+        </div>
+        <div class="row">
           <label for="email">Email Address</label>
           <input
             class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : ''%>"

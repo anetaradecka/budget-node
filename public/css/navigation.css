@@ -39,10 +39,11 @@ hr {
 
 .logout-button {
   background: #2a2c38;
-  color: #fff;
+  color: crimson;
   border: none;
   font-size: 0.9rem;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .form__logout,

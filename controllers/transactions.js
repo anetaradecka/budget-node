@@ -30,6 +30,7 @@ exports.getTransactions = (req, res, next) => {
         transactions: transactions,
         type: type,
         categories: categories,
+        user: req.user
       });
       break;
     case ENUM.TransactionTypes.INCOME:
@@ -44,6 +45,7 @@ exports.getTransactions = (req, res, next) => {
         transactions: transactions,
         type: type,
         categories: categories,
+        user: req.user,
       });
       break;
     default:
@@ -127,24 +129,3 @@ exports.postDeleteTransaction = (req, res, next) => {
       return next(error);
     });
 };
-
-// exports.getEditTransaction = (req, res, next) => {
-//   const editMode = req.query.edit;
-//   if (!editMode) {
-//     return res.redirect('/dashboard');
-//   }
-//   const transactionId = req.params.transactionId;
-//   Product.findById(prodId)
-//     .then(product => {
-//       if (!product) {
-//         return res.redirect('/');
-//       }
-//       res.render('admin/edit-product', {
-//         pageTitle: 'Edit Product',
-//         path: '/admin/edit-product',
-//         editing: editMode,
-//         product: product
-//       });
-//     })
-//     .catch(err => console.log(err));
-// };

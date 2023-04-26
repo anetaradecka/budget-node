@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  name: String,
   email: {
     type: String,
     required: true,
@@ -13,10 +14,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  resetToken: String,
-  resetTokenExpiration: String,
+  avatar: { type: String, default: "default.jpg" },
   expenses: { items: [] },
   incomes: { items: [] },
+  resetToken: String,
+  resetTokenExpiration: String,
 });
 
 userSchema.methods.addTransactionToBudget = function (type, item) {
@@ -71,6 +73,11 @@ userSchema.methods.removeTransactionFromBudget = function (
     default:
       console.log(`Error: invalid transaction type: ${type}.`);
   }
+  return this.save();
+};
+
+userSchema.methods.updateUser = function (imageUrl) {
+  this.avatar = imageUrl;
   return this.save();
 };
 

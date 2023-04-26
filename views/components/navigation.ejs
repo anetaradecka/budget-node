@@ -4,9 +4,9 @@
     <nav id="navigation">
       <div class="profile">
         <div class="author">
-          <img src="/img/john-doe.jpg" alt="" />
+          <img src="<%= user.avatar %>" alt="" />
         </div>
-        <h5>John Doe</h5>
+        <h5><%= user.name %></h5>
       </div>
       <hr />
       <ul id="primary-nav">
@@ -50,11 +50,24 @@
       </ul>
       <hr />
       <ul id="secondary-nav">
+        <li class="nav-item">
+          <div
+            class="<%= path === '/settings' ? 'decoration active' : 'decoration' %>"
+          ></div>
+          <i
+            class="<%= path === '/settings' ? 'fa-solid fa-gear active' : 'fa-solid fa-gear' %>"
+          ></i>
+          <a
+            class="<%= path === '/settings' ? 'active' : '' %>"
+            href="/settings"
+            >settings</a
+          >
+        </li>
         <li class="nav-item warning">
           <i class="fa-solid fa-circle-xmark"></i>
           <form class="form__logout" action="/logout" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-            <button class="logout-button" type="submit">Logout</button>
+            <button class="logout-button warning" type="submit">Logout</button>
           </form>
         </li>
       </ul>

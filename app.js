@@ -7,22 +7,43 @@ const session = require("express-session");
 const MongoDbStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
+const multer = require("multer");
 
 const errorController = require("./controllers/error");
 
 const User = require("./models/user");
 
-const MONGODB_URI =
-  "mongodb+srv://aneta:aneta123@shop.ypxo1ke.mongodb.net/budget";
+const MONGODB_URI = "";
 
 const app = express();
-// here we store session on the server not in the memory
+
 const store = new MongoDbStore({
   uri: MONGODB_URI,
   collection: "sessions",
 });
 
 const csrfProtection = csrf();
+
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 
 app.set("view engine", "ejs");
 
@@ -31,8 +52,16 @@ const authRoutes = require("./routes/auth");
 const transactionsRoutes = require("./routes/transactions");
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(
+  multer({
+    storage: fileStorage,
+    fileFilter: fileFilter,
+  }).single("image")
+);
 app.use(express.static(path.join(__dirname, "public")));
-// here we initialize a session
+app.use(express.static(path.join(__dirname, "images")));
+// app.use("/images", express.static(path.join(__dirname, "images")));
+
 app.use(
   session({
     secret: "budgetappsecretkeyvalue",
@@ -45,7 +74,7 @@ app.use(csrfProtection);
 app.use(flash());
 
 app.use((req, res, next) => {
-  // dodajemy token do kazdego renderowanego widoku
+  // token added to every view
   res.locals.csrfToken = req.csrfToken();
   next();
 });
@@ -71,12 +100,13 @@ app.use(adminRoutes);
 app.use(authRoutes);
 app.use(transactionsRoutes);
 
-app.get("/500", errorController.get500);
+// app.get("/500", errorController.get500);
 
 app.use(errorController.get404);
 
-//a special error-handling middleware with 4 arguments
+//a special error-handling middleware
 app.use((error, req, res, next) => {
+  console.log(error);
   res.status(500).render("500", { pageTitle: "Technical error", path: "500" });
 });
 
