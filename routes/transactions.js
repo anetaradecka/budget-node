@@ -13,10 +13,16 @@ router.post(
   transactionsController.postNewTransaction
 );
 
-router.post(
-  "/expenses/delete-transaction",
+// router.post(
+//   "/expenses/delete-transaction",
+//   isAuth,
+//   transactionsController.postDeleteTransaction
+// );
+
+router.delete(
+  "/expenses/transaction/:transactionId",
   isAuth,
-  transactionsController.postDeleteTransaction
+  transactionsController.deleteTransaction
 );
 
 router.get("/incomes", isAuth, transactionsController.getTransactions);

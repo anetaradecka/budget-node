@@ -35,23 +35,21 @@
         </p>
         <div class="transaction-action">
           <i class="fa-solid fa-pen-to-square" onclick="toggleModal()"></i>
-          <form
-            class="form-transaction-action"
-            action="/expenses/delete-transaction"
-            method="POST"
+          <input
+            type="hidden"
+            value="<%= transaction.item._id %>"
+            name="transactionId"
+            data-type="<%= type %>"
+          />
+          <input type="hidden" name="type" value="<%= type %>" />
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <button
+            class="btn-hidden"
+            type="button"
+            onclick="deleteTransaction(this)"
           >
-            <input
-              type="hidden"
-              value="<%= transaction.item._id %>"
-              name="transactionId"
-              data-type="<%= type %>"
-            />
-            <input type="hidden" name="type" value="<%= type %>" />
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-            <button class="btn-hidden" type="submit">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </form>
+            <i class="fa-solid fa-trash"></i>
+          </button>
         </div>
       </div>
       <% } %> <% } else { %>
@@ -60,6 +58,29 @@
         <img class="empty-transaction" src="/img/empty.svg" alt="" />
       </div>
       <% } %>
+      <section class="pagination">
+        <!-- First page -->
+        <% if(currentPage !== 1 && previousPage !== 1) { %><a
+          href="<%=path %>?page=1"
+          >1</a
+        ><% } %>
+        <!-- Previous page -->
+        <% if(hasPreviousPage) { %><a href="<%=path %>?page=<%= previousPage %>"
+          >prev</a
+        ><% } %>
+        <!-- Current page -->
+        <a href="<%=path %>?page=<%= currentPage %>" class="active"
+          ><%= currentPage %></a
+        >
+        <!-- Next page -->
+        <% if(hasNextPage) { %><a href="<%=path %>?page=<%= nextPage %>">next</a
+        ><% } %>
+        <!-- Last page -->
+        <% if(lastPage !== currentPage && nextPage !== lastPage) { %><a
+          href="<%=path %>?page=<%= lastPage %>"
+          ><%= lastPage %></a
+        ><% } %>
+      </section>
     </div>
   </section>
   <section class="column column_right">
@@ -70,3 +91,4 @@
 </body>
 <script src="/js/main.js"></script>
 <%- include('../components/footer.ejs') %>
+<script src="/js/admin.js"></script>

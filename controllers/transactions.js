@@ -12,15 +12,35 @@ const convertDates = (transactions) => {
   });
 };
 
+const filterForPagination = (transactions, page, ITEMS_PER_PAGE) => {
+  const start = (page - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+  transactions = transactions.slice(start, end);
+  return transactions;
+};
+
 exports.getTransactions = (req, res, next) => {
-  const type = req.originalUrl.slice(1).slice(0, -1);
+  const page = +req.query.page || 1;
+  let type;
   let transactions;
   let categories;
+  let totalTransactions;
+  const ITEMS_PER_PAGE = 13;
+
+  if (req.originalUrl.includes("?")) {
+    const url = req.originalUrl.slice(1).slice(0, -1);
+    type = url.substring(0, url.indexOf("?")).slice(0, -1);
+  } else {
+    type = req.originalUrl.slice(1).slice(0, -1);
+  }
 
   switch (type) {
     case ENUM.TransactionTypes.EXPENSE:
       transactions = req.user.expenses.items;
       categories = categoryList.ExpenseCategories;
+      totalTransactions = transactions.length;
+
+      transactions = filterForPagination(transactions, page, ITEMS_PER_PAGE);
 
       convertDates(transactions);
 
@@ -28,9 +48,15 @@ exports.getTransactions = (req, res, next) => {
         pageTitle: "Expenses",
         path: "/expenses",
         transactions: transactions,
+        currentPage: page,
+        hasNextPage: ITEMS_PER_PAGE * page < totalTransactions,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalTransactions / ITEMS_PER_PAGE),
         type: type,
         categories: categories,
-        user: req.user
+        user: req.user,
       });
       break;
     case ENUM.TransactionTypes.INCOME:
@@ -104,28 +130,47 @@ exports.postNewTransaction = (req, res, next) => {
     });
 };
 
-exports.postDeleteTransaction = (req, res, next) => {
-  const transactionId = req.body.transactionId;
+// exports.postDeleteTransaction = (req, res, next) => {
+//   const transactionId = req.body.transactionId;
+//   const type = req.body.type;
+
+//   req.user
+//     .removeTransactionFromBudget(type, transactionId)
+//     .then((result) => {
+//       console.log(`Transaction of type ${type} has successfuly been removed`);
+//       if (type === ENUM.TransactionTypes.EXPENSE) {
+//         res.redirect("/expenses");
+//       } else if (type === ENUM.TransactionTypes.INCOME) {
+//         res.redirect("/incomes");
+//       } else {
+//         console.log(
+//           `Unknown transaction type: ${type}. Redirect to dashboard.`
+//         );
+//         res.redirect("/dashboard");
+//       }
+//     })
+//     .catch((err) => {
+//       const error = new Error(err);
+//       error.httpStatusCode = 500;
+//       return next(error);
+//     });
+// };
+
+exports.deleteTransaction = (req, res, next) => {
+  const transactionId = req.params.transactionId;
   const type = req.body.type;
 
   req.user
     .removeTransactionFromBudget(type, transactionId)
     .then((result) => {
       console.log(`Transaction of type ${type} has successfuly been removed`);
-      if (type === ENUM.TransactionTypes.EXPENSE) {
-        res.redirect("/expenses");
-      } else if (type === ENUM.TransactionTypes.INCOME) {
-        res.redirect("/incomes");
-      } else {
-        console.log(
-          `Unknown transaction type: ${type}. Redirect to dashboard.`
-        );
-        res.redirect("/dashboard");
-      }
+      res.status(200).json({
+        message: `Transaction of type ${type} has successfuly been removed`,
+      });
     })
     .catch((err) => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
+      res
+        .status(500)
+        .json({ message: `Operation (delete transaction) failed.` });
     });
 };

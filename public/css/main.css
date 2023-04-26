@@ -28,6 +28,22 @@ a {
   text-decoration: none;
 }
 
+.pagination {
+  margin-top: 20px;
+}
+
+.pagination a {
+  color: #000;
+  padding: 2px 5px;
+  font-size: 0.9rem;
+}
+
+.pagination a:hover,
+.pagination a.active {
+  color: cornflowerblue;
+  border-radius: 50%;
+}
+
 i {
   padding-right: 10px;
 }
