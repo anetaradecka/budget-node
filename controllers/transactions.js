@@ -43,7 +43,7 @@ exports.getTransactions = (req, res, next) => {
       transactions = filterForPagination(transactions, page, ITEMS_PER_PAGE);
 
       convertDates(transactions);
-
+      // copy this logic for incomes and refactor!
       res.render("pages/transactions", {
         pageTitle: "Expenses",
         path: "/expenses",

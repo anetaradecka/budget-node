@@ -1,13 +1,77 @@
 <%- include('../components/head.ejs') %>
 <link rel="stylesheet" href="/css/dashboard.css" />
 <link rel="stylesheet" href="/css/navigation.css" />
-<link rel="stylesheet" href="/css/transactions.css" />
 <link rel="stylesheet" href="/css/modal.css" />
+<link rel="stylesheet" href="/css/content.css" />
 
 <body class="center">
   <%- include('../components/navigation.ejs') %>
+  <section class="main"><%- include('../components/header.ejs') %>
+    <div class="container">
+      <i class="fa-solid fa-filter"></i>
+      <button class="btn btn-primary" onclick="toggleModal()">+ Add transaction</button>
+    </div>
+    <div class="container transactions-panel">
+      <section class="grid">
+        <div class="grid-row meta">
+          <div class="grid-cell"></div>
+          <div class="grid-cell">description</div>
+          <div class="grid-cell">category</div>
+          <div class="grid-cell">subcategory</div>
+          <div class="grid-cell">date</div>
+          <div class="grid-cell">inflow</div>
+          <div class="grid-cell">outflow</div>
+          <div class="grid-cell cell-edit"></div>
+        </div>
 
-  <section class="column column_middle">
+        <% if(transactions.length > 0) { %> <% for(let transaction of
+          transactions) { %>
+        <div class="grid-row">
+          <div class="grid-cell">
+            <i class="fa-solid fa-image"></i>
+          </div>
+          <div class="grid-cell"><%= transaction.item.comment %></div>
+          <div class="grid-cell"><%= transaction.item.category %></div>
+          <div class="grid-cell"><%= transaction.item.category %></div>
+          <div class="grid-cell"><%= transaction.item.date %></div>
+          <div class="grid-cell"><% if (type === 'expense') { %>
+            <span>- </span>
+            <% } else { %>
+            <span>+ </span>
+            <% } %><%= transaction.item.value %> PLN</div>
+          <div class="grid-cell"><% if (type === 'expense') { %>
+            <span>- </span>
+            <% } else { %>
+            <span>+ </span>
+            <% } %><%= transaction.item.value %> PLN</div>
+          <div class="grid-cell cell-edit">
+            <input
+            type="hidden"
+            value="<%= transaction.item._id %>"
+            name="transactionId"
+            data-type="<%= type %>"
+          />
+          <input type="hidden" name="type" value="<%= type %>" />
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <i class="fa-solid fa-pen-to-square"></i>
+            <button
+            class="btn-hidden"
+            type="button"
+            onclick="deleteTransaction(this)"
+          >
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          </div>
+        </div>
+        <% } %> <% } else { %>
+          <div class="empty center">
+            <h6>No transactions yet! Click on add to add your first transaction</h6>
+            <img class="empty-transaction" src="/img/empty.svg" alt="" />
+          </div>
+          <% } %>
+  </section>
+
+  <!-- <section class="column column_middle">
     <div class="container filters">
       <button class="btn btn-primary" onclick="toggleModal()">
         Add <%= type %>
@@ -59,23 +123,23 @@
       </div>
       <% } %>
       <section class="pagination">
-        <!-- First page -->
+        First page
         <% if(currentPage !== 1 && previousPage !== 1) { %><a
           href="<%=path %>?page=1"
           >1</a
         ><% } %>
-        <!-- Previous page -->
+        Previous page
         <% if(hasPreviousPage) { %><a href="<%=path %>?page=<%= previousPage %>"
           >prev</a
         ><% } %>
-        <!-- Current page -->
+        Current page
         <a href="<%=path %>?page=<%= currentPage %>" class="active"
           ><%= currentPage %></a
         >
-        <!-- Next page -->
+        Next page
         <% if(hasNextPage) { %><a href="<%=path %>?page=<%= nextPage %>">next</a
         ><% } %>
-        <!-- Last page -->
+        Last page
         <% if(lastPage !== currentPage && nextPage !== lastPage) { %><a
           href="<%=path %>?page=<%= lastPage %>"
           ><%= lastPage %></a
@@ -85,7 +149,7 @@
   </section>
   <section class="column column_right">
     <div class="container profile"></div>
-  </section>
+  </section> -->
 
   <%- include('../components/modal.ejs') %>
 </body>

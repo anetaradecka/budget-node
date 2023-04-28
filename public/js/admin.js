@@ -4,7 +4,7 @@ const deleteTransaction = (btn) => {
   ).value;
   const csrf = btn.parentNode.querySelector("[name=_csrf]").value;
   const type = btn.parentNode.querySelector("[name=type]").value;
-  const transactionItem = btn.closest(".transaction-item");
+  const transactionItem = btn.closest(".grid-row");
 
   const formData = new FormData();
   formData.append("type", type);

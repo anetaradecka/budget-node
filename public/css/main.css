@@ -1,13 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Italiana&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Italiana&family=Roboto:wght@100;300;400;500;700;900&display=swap"); */
 
-:root {
-  /* backgrounds */
+/* :root {
+
   --container-color: #fff;
   --btn-primary: cornflowerblue;
   --btn-secondary: #fff;
   --btn-disabled: rgb(173, 172, 172);
 
-  /* fonts */
+
   --font-primary: "Roboto", sans-serif;
 }
 
@@ -65,11 +65,6 @@ i {
   color: #fff;
 }
 
-.btn-hidden {
-  background: none;
-  border: none;
-}
-
 .btn-primary:hover {
   background-color: #fff;
   border: 1px solid var(--btn-primary);
@@ -112,4 +107,94 @@ i {
   width: 100%;
   border: 1px solid #cacaca44;
   box-shadow: 2px 3px 3px #cacaca44;
+} */
+
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+:root {
+  /* backgrounds */
+  --bg-color: #f8f8f8;
+  --btn-primary: #759cc9;
+  --btn-secondary: #8fb1cc;
+  --btn-tertiary: #aeaeae;
+
+  --dark-blue: #759cc9;
+  --ceil: #8fb1cc;
+  --pastel-blue: #adc3d1;
+  --bright-gray: #eeecf1;
+  --silver-foil: #aeaeae;
+  --spanish-gray: #949494;
+
+  /* fonts */
+  --font-primary: "Raleway", sans-serif;
+  --text-base-color: #000;
+  --link-color: #adc3d1;
+  --active-link-color: #759cc9;
+  --hover-link-color: #759cc9;
+
+  --shadow: 1px 3px 5px #dbd9d9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-color);
+  font-family: var(--font-primary);
+  font-size: 18px;
+  height: 100vh;
+  display: flex;
+}
+
+/* fonts */
+
+/* buttons */
+.btn {
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 1px;
+  font-family: var(--font-primary);
+}
+
+.btn-primary {
+  background: var(--btn-primary);
+  border-color: var(--btn-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #fff;
+  color: var(--btn-primary);
+  transition: all 0.3s ease;
+}
+
+.btn.logout {
+  background: initial;
+  border: initial;
+  padding: initial;
+}
+
+.btn.logout,
+.fa-circle-xmark {
+  color: #303030;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.btn-hidden {
+  display: flex;
+  background: none;
+  border: none;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

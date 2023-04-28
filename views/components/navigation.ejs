@@ -1,4 +1,46 @@
-<section class="column column_left">
+<section class="navigation-left">
+  <nav id="navigation">
+    <div class="user-profile">
+      <div class="user-avatar">
+        <img id="avatar" src="<%= user.avatar %>" alt="user profile" />
+      </div>
+    </div>
+
+    <ul id="primary-nav">
+      <li class="nav-item">
+        <span class="<%= path === '/dashboard' ? 'active' : '' %>"></span>
+        <i
+          class="<%= path === '/dashboard' ? 'fa-solid fa-square-up-right active' : 'fa-solid fa-square-up-right' %>"
+        ></i>
+        <a
+          class="<%= path === '/dashboard' ? 'active' : '' %>"
+          href="/dashboard"
+          >dashboard</a
+        >
+      </li>
+      <li class="nav-item">
+        <span class="<%= path === '/expenses' ? 'active' : '' %>"></span>
+        <i
+          class="<%= path === '/expenses' ? 'fa-solid fa-square-up-right active' : 'fa-solid fa-square-up-right' %>"
+        ></i>
+        <a class="<%= path === '/expenses' ? 'active' : '' %>" href="/expenses"
+          >expenses</a
+        >
+      </li>
+      <li class="nav-item">
+        <span class="<%= path === '/incomes' ? 'active' : '' %>"></span>
+        <i
+          class="<%= path === '/incomes' ? 'fa-solid fa-money-bill-trend-up active' : 'fa-solid fa-money-bill-trend-up' %>"
+        ></i>
+        <a class="<%= path === '/incomes' ? 'active' : '' %>" href="/incomes"
+          >incomes</a
+        >
+      </li>
+    </ul>
+  </nav>
+</section>
+
+<!-- <section class="column column_left">
   <div class="container navigation">
     <h4>Budget tracker</h4>
     <nav id="navigation">
@@ -73,4 +115,4 @@
       </ul>
     </nav>
   </div>
-</section>
+</section> -->
