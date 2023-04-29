@@ -159,13 +159,31 @@ body {
   border-radius: 3px;
   border-style: solid;
   border-width: 1px;
-  font-family: var(--font-primary);
 }
 
 .btn-primary {
   background: var(--btn-primary);
   border-color: var(--btn-primary);
   color: #fff;
+}
+
+.btn-secondary {
+  background: #fff;
+  border-color: var(--btn-primary);
+  color: var(--btn-primary);
+}
+
+.btn-save {
+  background: var(--btn-tertiary);
+  border-color: var(--btn-tertiary);
+  color: #fff;
+  margin-left: 20px;
+}
+
+.btn-decline {
+  background: #fff;
+  border-color: var(--btn-tertiary);
+  color: var(--btn-tertiary);
 }
 
 .btn-primary:hover {
@@ -180,8 +198,7 @@ body {
   padding: initial;
 }
 
-.btn.logout,
-.fa-circle-xmark {
+.btn.logout {
   color: #303030;
   font-weight: bold;
   font-size: 1em;
@@ -197,4 +214,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+form.logout {
+  width: inherit;
+  margin: 0;
 }

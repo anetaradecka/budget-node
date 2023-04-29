@@ -11,10 +11,13 @@
         </div>
         <ul id="secondary-menu">
           <li class="nav-item">
-            <a href="#">settings</a>
+            <a href="/settings">settings</a>
           </li>
           <li class="nav-item">
-            <a href="#">logout</a>
+            <form class="logout" action="/logout" method="POST">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button class="btn logout" type="submit">logout</button>
+            </form>
           </li>
         </ul>
       </nav>

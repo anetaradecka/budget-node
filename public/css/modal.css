@@ -4,7 +4,7 @@
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.228);
   z-index: 1;
   display: none;
 }
@@ -16,9 +16,8 @@
   transform: translate(-50%, -50%) scale(0);
   background: #fff;
   width: 450px;
-  height: auto;
+  height: 600px;
   z-index: 2;
-  text-align: center;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -27,17 +26,11 @@
   cursor: pointer;
   position: absolute;
   right: 20px;
-  top: 20px;
+  top: -10px;
   width: 30px;
   background: var(--navy);
   color: #000;
-  font-size: 1.2rem;
-  font-weight: bold;
-  line-height: 30px;
-  text-align: center;
-  border-radius: 50%;
-  border: 2px solid #000;
-  height: 30px;
+  font-size: 4rem;
 }
 
 .modal.active .overlay {
@@ -51,9 +44,7 @@
 
 .transaction-form {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 400px;
+  width: 100%;
   flex-direction: column;
 }
 
@@ -64,7 +55,16 @@ form {
 
 .form-control {
   margin: 1rem 0;
-  width: 60%;
+  width: 100%;
+}
+
+.form-control-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-control-group .form-control {
+  width: 47%;
 }
 
 .form-control label,
@@ -87,13 +87,30 @@ form {
   border: 1px solid #000;
   font: 0.9rem;
   border-radius: 2px;
+  outline: none;
 }
 
 .form-control input:focus,
 .form-control textarea:focus {
   border: 1px solid #000;
 }
-9 .form-control input,
+.form-control input,
 .form-control select {
   min-height: 30px;
+  color: #000;
+  outline: none;
+}
+
+.modal-footer {
+  background: rgb(240, 240, 240);
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 100px;
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }

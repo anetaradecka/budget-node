@@ -1,8 +1,8 @@
 <div class="modal" id="modal">
   <div class="overlay"></div>
   <div class="content">
-    <div class="close-btn center" onclick="toggleModal()">&times;</div>
-    <h2>Add <%= type %></h2>
+    <div class="close-btn" onclick="toggleModal()">&times;</div>
+    <h2>New transaction</h2>
 
     <form
       class="transaction-form"
@@ -20,24 +20,42 @@
         <% } %>
       </div>
 
-      <div class="form-control">
-        <label for="value">value</label>
-        <input type="number" name="value" id="value" step="0.01" />
+      <!-- for subcategory -->
+      <!-- <div class="form-control">
+        <% if (categories.length > 0) { %>
+        <label for="category">category</label>
+        <select id="category" name="category">
+          <% for (let category of categories) { %>
+          <option value="<%= category %>"><%= category %></option>
+          <% } %>
+        </select>
+        <% } %>
+      </div> -->
+
+      <div class="form-control-group">
+        <div class="form-control">
+          <label for="value">value</label>
+          <input type="number" name="value" id="value" step="0.01" />
+        </div>
+
+        <div class="form-control">
+          <label for="date">date</label>
+          <input type="date" name="date" id="date" />
+        </div>
       </div>
 
       <div class="form-control">
-        <label for="date">date</label>
-        <input type="date" name="date" id="date" />
-      </div>
-
-      <div class="form-control">
-        <label for="description">Notes (optional)</label>
+        <label for="description">*description (optional)</label>
         <textarea name="comment" id="comment" rows="5"></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-decline" type="submit">Decline</button>
+        <button class="btn btn-save" type="submit">Save</button>
       </div>
 
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
       <input type="hidden" name="type" value="<%= type %>" />
-      <button class="btn btn-primary" type="submit">Add <%= type %></button>
     </form>
   </div>
 </div>
