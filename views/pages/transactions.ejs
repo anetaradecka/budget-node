@@ -69,87 +69,37 @@
             <img class="empty-transaction" src="/img/empty.svg" alt="" />
           </div>
           <% } %>
+          <section class="center pagination">
+            <!-- arrow left -->
+            <a href="<%=path %>?page=<%= previousPage %>"
+              ><i class="fa-solid fa-arrow-left"></i></a
+            >
+            <!-- First page -->
+            <% if(currentPage !== 1 && previousPage !== 1) { %><a
+              href="<%=path %>?page=1"
+              >1</a
+            ><% } %>
+            <!-- Previous page -->
+            <% if(hasPreviousPage) { %><a href="<%=path %>?page=<%= previousPage %>"
+              ><%= previousPage %></a
+            ><% } %>
+            <!-- Current page -->
+            <a href="<%=path %>?page=<%= currentPage %>" class="active"
+              ><%= currentPage %></a
+            >
+            <!-- Next page -->
+            <% if(hasNextPage) { %><a href="<%=path %>?page=<%= nextPage %>"><%= nextPage %></a
+            ><% } %>
+            <!-- Last page -->
+            <% if(lastPage !== currentPage && nextPage !== lastPage) { %><a
+              href="<%=path %>?page=<%= lastPage %>"
+              ><%= lastPage %></a
+            ><% } %>
+            <!-- arrow right -->
+            <a href="<%=path %>?page=<%= nextPage %>"><i class="fa-solid fa-arrow-right"></i></a
+              >
+          </section>
   </section>
-
-  <!-- <section class="column column_middle">
-    <div class="container filters">
-      <button class="btn btn-primary" onclick="toggleModal()">
-        Add <%= type %>
-      </button>
-    </div>
-    <div class="container transactions">
-      <div class="row transactions-meta">
-        <p>Category</p>
-        <p>Comment</p>
-        <p>Date</p>
-        <p>Amount</p>
-      </div>
-      <% if(transactions.length > 0) { %> <% for(let transaction of
-      transactions) { %>
-      <div class="row transaction-item">
-        <p class="transaction-category"><%= transaction.item.category %></p>
-        <p class="transaction-comment"><%= transaction.item.comment %></p>
-        <p class="transaction-date"><%= transaction.item.date %></p>
-        <p class="transaction-value">
-          <% if (type === 'expense') { %>
-          <span>- </span>
-          <% } else { %>
-          <span>+ </span>
-          <% } %><%= transaction.item.value %> PLN
-        </p>
-        <div class="transaction-action">
-          <i class="fa-solid fa-pen-to-square" onclick="toggleModal()"></i>
-          <input
-            type="hidden"
-            value="<%= transaction.item._id %>"
-            name="transactionId"
-            data-type="<%= type %>"
-          />
-          <input type="hidden" name="type" value="<%= type %>" />
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-          <button
-            class="btn-hidden"
-            type="button"
-            onclick="deleteTransaction(this)"
-          >
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </div>
-      </div>
-      <% } %> <% } else { %>
-      <div class="empty center">
-        <h6>No transactions yet! Click on add to add your first transaction</h6>
-        <img class="empty-transaction" src="/img/empty.svg" alt="" />
-      </div>
-      <% } %>
-      <section class="pagination">
-        First page
-        <% if(currentPage !== 1 && previousPage !== 1) { %><a
-          href="<%=path %>?page=1"
-          >1</a
-        ><% } %>
-        Previous page
-        <% if(hasPreviousPage) { %><a href="<%=path %>?page=<%= previousPage %>"
-          >prev</a
-        ><% } %>
-        Current page
-        <a href="<%=path %>?page=<%= currentPage %>" class="active"
-          ><%= currentPage %></a
-        >
-        Next page
-        <% if(hasNextPage) { %><a href="<%=path %>?page=<%= nextPage %>">next</a
-        ><% } %>
-        Last page
-        <% if(lastPage !== currentPage && nextPage !== lastPage) { %><a
-          href="<%=path %>?page=<%= lastPage %>"
-          ><%= lastPage %></a
-        ><% } %>
-      </section>
-    </div>
-  </section>
-  <section class="column column_right">
-    <div class="container profile"></div>
-  </section> -->
 
   <%- include('../components/modal.ejs') %>
 </body>

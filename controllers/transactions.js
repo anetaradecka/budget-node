@@ -25,7 +25,7 @@ exports.getTransactions = (req, res, next) => {
   let transactions;
   let categories;
   let totalTransactions;
-  const ITEMS_PER_PAGE = 13;
+  const ITEMS_PER_PAGE = 10;
 
   if (req.originalUrl.includes("?")) {
     const url = req.originalUrl.slice(1).slice(0, -1);
