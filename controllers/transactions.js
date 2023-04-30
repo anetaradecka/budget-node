@@ -19,64 +19,65 @@ const filterForPagination = (transactions, page, ITEMS_PER_PAGE) => {
   return transactions;
 };
 
+const checkForPaginationQuery = (originalUrl) => {
+  if (originalUrl.includes("?")) {
+    const url = originalUrl.slice(1).slice(0, -1);
+    type = url.substring(0, url.indexOf("?")).slice(0, -1);
+  } else {
+    type = originalUrl.slice(1).slice(0, -1);
+  }
+  return type;
+};
+
 exports.getTransactions = (req, res, next) => {
   const page = +req.query.page || 1;
-  let type;
+  const ITEMS_PER_PAGE = 10;
   let transactions;
   let categories;
   let totalTransactions;
-  const ITEMS_PER_PAGE = 10;
+  let pageTitle;
+  let path;
 
-  if (req.originalUrl.includes("?")) {
-    const url = req.originalUrl.slice(1).slice(0, -1);
-    type = url.substring(0, url.indexOf("?")).slice(0, -1);
-  } else {
-    type = req.originalUrl.slice(1).slice(0, -1);
-  }
+  const type = checkForPaginationQuery(req.originalUrl);
 
   switch (type) {
     case ENUM.TransactionTypes.EXPENSE:
       transactions = req.user.expenses.items;
+      console.log(transactions);
       categories = categoryList.ExpenseCategories;
-      totalTransactions = transactions.length;
-
-      transactions = filterForPagination(transactions, page, ITEMS_PER_PAGE);
-
-      convertDates(transactions);
-      // copy this logic for incomes and refactor!
-      res.render("pages/transactions", {
-        pageTitle: "Expenses",
-        path: "/expenses",
-        transactions: transactions,
-        currentPage: page,
-        hasNextPage: ITEMS_PER_PAGE * page < totalTransactions,
-        hasPreviousPage: page > 1,
-        nextPage: page + 1,
-        previousPage: page - 1,
-        lastPage: Math.ceil(totalTransactions / ITEMS_PER_PAGE),
-        type: type,
-        categories: categories,
-        user: req.user,
-      });
+      pageTitle = "Manage your expenses";
+      path = `/${ENUM.TransactionTypes.EXPENSES}`;
       break;
     case ENUM.TransactionTypes.INCOME:
       transactions = req.user.incomes.items;
       categories = categoryList.IncomeCategories;
-
-      convertDates(transactions);
-
-      res.render("pages/transactions", {
-        pageTitle: "Incomes",
-        path: "/incomes",
-        transactions: transactions,
-        type: type,
-        categories: categories,
-        user: req.user,
-      });
+      pageTitle = "Manage your incomes";
+      path = `/${ENUM.TransactionTypes.INCOMES}`;
       break;
     default:
       console.log(`Error: invalid transaction type: ${type}.`);
   }
+
+  totalTransactions = transactions.length;
+
+  transactions = filterForPagination(transactions, page, ITEMS_PER_PAGE);
+
+  convertDates(transactions);
+
+  res.render("pages/transactions", {
+    pageTitle: pageTitle,
+    path: path,
+    transactions: transactions,
+    currentPage: page,
+    hasNextPage: ITEMS_PER_PAGE * page < totalTransactions,
+    hasPreviousPage: page > 1,
+    nextPage: page + 1,
+    previousPage: page - 1,
+    lastPage: Math.ceil(totalTransactions / ITEMS_PER_PAGE),
+    type: type,
+    categories: categories,
+    user: req.user,
+  });
 };
 
 exports.postNewTransaction = (req, res, next) => {
@@ -125,7 +126,6 @@ exports.postNewTransaction = (req, res, next) => {
     .catch((err) => {
       const error = new Error(err);
       error.httpStatusCode = 500;
-      // this will skip all other middleware and go to error-handling middleware
       return next(error);
     });
 };

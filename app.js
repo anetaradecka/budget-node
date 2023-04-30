@@ -13,7 +13,7 @@ const errorController = require("./controllers/error");
 
 const User = require("./models/user");
 
-const MONGODB_URI = "";
+const MONGODB_URI = "mongodb+srv://aneta:aneta123@shop.ypxo1ke.mongodb.net/budget";
 
 const app = express();
 
@@ -74,7 +74,6 @@ app.use(csrfProtection);
 app.use(flash());
 
 app.use((req, res, next) => {
-  // token added to every view
   res.locals.csrfToken = req.csrfToken();
   next();
 });
@@ -99,8 +98,6 @@ app.use((req, res, next) => {
 app.use(adminRoutes);
 app.use(authRoutes);
 app.use(transactionsRoutes);
-
-// app.get("/500", errorController.get500);
 
 app.use(errorController.get404);
 
